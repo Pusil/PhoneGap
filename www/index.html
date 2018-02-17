@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+Author: Jacob Asher Hu
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="./theme/themes/DarkThemeOne.min.css" />
+    <link rel="stylesheet" href="./theme/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="./css/primary.css" />
+
+    <script type="text/javascript">
+        function expected(a, b) {
+            var exp = (b - a) / 400;
+            var bottom = 1 + Math.pow(10, exp);
+            return 1 / bottom;
+        }
+        function calculateELO() {
+            var playerOneELO = parseInt(document.getElementById("playerOneELO").value);
+            var playerTwoELO = parseInt(document.getElementById("playerTwoELO").value);
+            var kOne = 32;
+            var kTwo = 32;
+
+            var expectedOne = expected(playerOneELO, playerTwoELO);
+            var expectedTwo = expected(playerTwoELO, playerOneELO);
+
+            if (playerOneELO < 2100) {
+                kOne = 32;
+            }
+            else if (playerOneELO < 2400) {
+                kOne = 24;
+            }
+            else {
+                kOne = 16;
+            }
+            if (playerTwoELO < 2100) {
+                kTwo = 32;
+            }
+            else if (playerTwoELO < 2400) {
+                kTwo = 24;
+            }
+            else {
+                kTwo = 16;
+            }
+
+            var winner = document.getElementById("winner").value;
+            var playerOneScore = parseFloat(winner);
+            var playerTwoScore = 1 - parseFloat(winner);
+
+            var playerOneELOfinal = playerOneELO + (kOne * (playerOneScore - expectedOne));
+            var playerTwoELOfinal = playerTwoELO + (kTwo * (playerTwoScore - expectedTwo));
+
+            var diff1 = playerOneELOfinal - playerOneELO;
+            var diff2 = playerTwoELOfinal - playerTwoELO;
+
+            var text1 = document.getElementById("final1");
+            text1.innerText = "Player 1 has a new score of " + parseInt(playerOneELOfinal) + " (" + parseInt(diff1) + ")";
+            var text2 = document.getElementById("final2");
+            text2.innerText = "Player 2 has a new score of " + parseInt(playerTwoELOfinal) + " (" + parseInt(diff2) + ")";
+        }
+    </script>
+
+    <!-- adding mobile download configs-->
+    <!--<link rel="apple-touch-icon" href="icon.png" />-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, inital-scale=1" />
+</head>
+
+<body>
+<header>
+    <h1>CSCI N300 Main Page</h1>
+    <p>By Jacob Asher Hu</p>
+</header>
+<form action="">
+    <fieldset>
+        <legend>My Form</legend>
+        <input type="range" name="playerOneELO" id="playerOneELO" value="1500" min="0" max="3000" data-theme="a" />
+        <label for="playerOneELO">Player 1 Initial ELO</label>
+        <input type="range" name="playerTwoELO" id="playerTwoELO" value="1500" min="0" max="3000" data-theme="a" />
+        <label for="playerTwoELO">Player 2 Initial ELO</label>
+        <p>Who won?</p>
+        <select id="winner">
+            <option value="1.0">Player 1</option>
+            <option value="0.0">Player 2</option>
+            <option value="0.5">Draw</option>
+        </select>
+        <button type="button" onclick="calculateELO()">Submit</button>
+    </fieldset>
+    <p id="final1"></p>
+    <p id="final2"></p>
+</form>
+</body>
+
+</html>

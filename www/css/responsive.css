@@ -1,0 +1,7 @@
+/*********************************
+Author: Jacob Asher Hu
+ ********************************/
+
+@import url("../theme/themes/DarkThemeOne.min.css") only screen and (max-device-width: 480px);
+@import url("../theme/themes/jquery.mobile.icons.min.css") only screen and (max-device-width: 480px);
+@import url("https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css") only screen and (max-device-width: 480px);
